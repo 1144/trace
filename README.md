@@ -1,6 +1,6 @@
 ﻿# trace.js
 
-JavaScript代码调试、测试、错误监测上报工具，提供各浏览器下统一的日志窗口，兼容包括IE6在内的绝大部分浏览器。超轻量级工具。
+JavaScript代码调试、测试、错误监测上报工具，提供各浏览器下统一的日志窗口，兼容包括IE6在内的所有主流浏览器。超轻量级工具。
 
 ![trace](http://mokjs.sinaapp.com/pic/trace.png)
 
