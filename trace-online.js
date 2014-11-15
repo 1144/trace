@@ -64,7 +64,7 @@ window.trace || function(window){
 		sendNow = true;
 	};
 	
-	//如果url中含有$TRACE&，则1分钟后弹出日志信息，方便在线和用户联调
+	//如果url中含有&_TRACE_&，则1分钟后弹出日志信息，方便在线和用户联调
 	if(location.search.indexOf('&_TRACE_&')>0){
 		setTimeout(function(){
 			alert(_cache.join('___'));

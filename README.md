@@ -13,6 +13,7 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 在浏览器里打开页面，按组合键 `Alt + ~` 即可打开日志窗口。
 
 日志窗口的操控方法及快捷键使用请查看日志窗口右上角的 `Help` 菜单。
+![trace-help](http://mokjs.sinaapp.com/pic/trace-help.png)
 
 为提高线上的性能或者减小JS文件大小，上线时可换成trace-online.js：
 
@@ -128,3 +129,7 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 	trace.sendLog();
 	trace.timeEnd('test-example');
 ```
+## 特别说明
+
+在IE9及某些IE内核的浏览器下，如果要让浏览器记住日志窗口状态，必须把页面放在某个host下。
+直接用浏览器打开本地文件的方式无法启用浏览器的localStorage。
