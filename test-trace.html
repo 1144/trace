@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<title>测试trace</title>
+<style type="text/css">
+body {height:3000px;}
+</style>
+<script type="text/javascript" src="trace.js"></script>
+</head>
+<body>
+Test trace<br/>
+请按组合键 Alt + ~ 调出控制台。
+
+<script type="text/javascript">
+	trace.time('test-example');
+	trace('div>加粗<b>haha</b>没"有用<span');
+	trace.ok('div>加粗<b>haha</b>没有用<span', {}, 2011);
+	trace.error('计算结果：', 2012+12-10, 0, null, 2010);
+	trace.warn(123, '', new Date);
+	trace.warn(null);
+
+	var obj = {
+		abc: 'abs>k"<dld>sd<c',
+		num: 456,
+		arr: [456,567],
+		nul: null,
+		dt: new Date(),
+		reg: /^reg$/ig,
+		cde: {
+			hjk: 236,
+			arr: [456,567,789],
+			nul: null,
+			dt: new Date(),
+			reg: /^reg22$/ig,
+			mnj: {
+				iuy: 789,
+				kjdj: 'some str',
+				objjj: {
+					kqwe: 'haha~',
+					end: 100
+				}
+			}
+		}
+	};
+	trace(obj);
+	//setTimeout(function(){trace.ok({'sajgj':858,'iojk':'value hehe.'});},10000);
+
+	trace([0, 1.1, 2, 3]);
+	trace('array===' + [0, 1.1, 2, 3]);
+	trace( 0==false );
+	trace(new Date());
+	trace(Date);
+	trace(/^85/g.toString());
+	trace(new RegExp('sj\\/d', 'gi'));
+	trace(/^8s<kdk5/g);
+	trace(/^8s<kdk5/g, 'somenote');
+	var c34 = '双引号"end &#34;', c39 = "单引号'end &#39;";
+	trace(c34, c39);
+	trace(c39);
+	trace('div>加粗<b>haha</b>没有用<span');
+
+	//调用测试接口
+	trace.eq(1, '1');
+	trace.eq(1, 2);
+	trace.eq('abc', 'abc');
+	trace.assert(456, 'error!');
+	trace.report();
+
+	var a = 456;
+	trace.eq(1, 1);
+	trace.assert(!!a, 'error!');
+	trace.report();
+
+	trace.sendLog();
+	trace.timeEnd('test-example');
+</script>
+
+</body>
+</html>
