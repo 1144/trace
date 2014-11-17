@@ -31,6 +31,9 @@ window.trace || function(window){
 	trace.eq = function(actualValue, expectedValue, msg){
 		actualValue===expectedValue || trace.error('EQ-ERROR:'+ (msg || ''));
 	};
+	trace.find = function(value, msg){
+		value || trace.error('FIND-ERROR: '+ (msg || ''));
+	};
 	trace.assert = function(trueValue, msg){
 		trueValue===true || trace.error('ASSERT-ERROR:'+ (msg || ''));
 	};

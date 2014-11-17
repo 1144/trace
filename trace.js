@@ -54,6 +54,14 @@ window.trace || function(window, document){
 			_testErrorCount++;
 		}
 	};
+	trace.find = function(value, msg){
+		_testCount++;
+		if(!value){
+			trace.error('FIND-ERROR: '+ (msg || '测试用例失败'));
+			trace.warn('测试实际值：'+(value===''?'[空字符串]':value)+' ('+(typeof value)+')');
+			_testErrorCount++;
+		}
+	};
 	trace.assert = function(trueValue, msg){
 		_testCount++;
 		if(trueValue !== true){

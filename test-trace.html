@@ -64,11 +64,15 @@ Test trace<br/>
 	trace.eq(1, '1');
 	trace.eq(1, 2);
 	trace.eq('abc', 'abc');
+	trace.find(obj.num, 'obj.num为假')
+	trace.find(obj.nul, 'obj.nul为假')
 	trace.assert(456, 'error!');
 	trace.report();
 
-	var a = 456;
+	var a = 456, arr1 = [], arr2 = [0,1];
 	trace.eq(1, 1);
+	trace.find(arr1.length, 'arr1是空数组');
+	trace.find(arr2.length);
 	trace.assert(!!a, 'error!');
 	trace.report();
 

@@ -21,53 +21,35 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 
 当然也可以不换。trace-online.js里的代码请自行按照业务需求修改。
 
-## 接口API
+## API文档
 
-    trace()
+* __trace(value1, value2, ...)__ - 输出普通日志，以白色字体显示。
 
-输出普通日志，以白色字体显示。
+* __trace.ok(value1, value2, ...)__ - 输出成功日志，以绿色字体显示。
 
-    trace.ok()
+* __trace.warn(value1, value2, ...)__ - 输出警告日志，以黄色字体显示。
 
-输出成功日志，以绿色字体显示。
-
-    trace.warn()
-
-输出警告日志，以黄色字体显示。
-
-    trace.error()
-
-输出错误日志，以红色字体显示。
+* __trace.error(value1, value2, ...)__ - 输出错误日志，以红色字体显示。
 
 以上4个接口都可同时传多个参数。输出日志时各数据间以 `◆` 符号分隔。
 
-    trace.time(mark)
+* __trace.time(mark)__ - 开始计算某一段代码的用时，mark为计时标记。
 
-开始计算某一段代码的用时，mark为计时标记。
+* __trace.timeEnd(mark)__ - 结束计算某一段代码的用时，mark为计时标记。
 
-    trace.timeEnd(mark)
+* __trace.sendLog(msg)__ - 参数msg可选，无msg时发送所有收集起来的错误日志。
+适用于线上环境，用于发送错误日志到日志处理服务器。建议在所有业务代码执行完毕时调用，即可一次上报所有错误。
 
-结束计算某一段代码的用时，mark为计时标记。
+用于测试的接口API
 
-    trace.sendLog(msg)
+* __trace.eq(actualValue, expectedValue, msg)__ - 判断实际结果actualValue与期望值expectedValue是否一致，trace内部用全等 `===` 比较。
+msg为不相等时的报错信息。
 
-参数msg可选，无msg时发送所有收集起来的错误日志。适用于线上环境，用于发送错误日志到日志处理服务器。
-建议在所有业务代码执行完毕时调用，即可一次上报所有错误。
+* __trace.find(value, msg)__ - 判断value是否为真，trace内部用 `if( value )` 判断。msg为参数value为假时的报错信息。
 
+* __trace.assert(trueValue, msg)__ - 判断结果是否为true，trace内部用 `=== true` 比较。msg为参数trueValue不等true时的报错信息。
 
-## 用于测试的接口API
-
-    trace.eq(actualValue, expectedValue, msg)
-
-判断实际结果actualValue与期望值expectedValue是否一致，trace内部用全等 `===` 比较。msg为不相等时的报错信息。
-
-    trace.assert(trueValue, msg)
-
-判断结果是否为true，trace内部用 `=== true` 比较。msg为参数trueValue不等true时的报错信息。
-
-    trace.report()
-
-打印测试报告。
+* __trace.report()__ - 打印测试报告。
 
 ## 代码示例
 
@@ -123,11 +105,15 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 	trace.eq(1, '1');
 	trace.eq(1, 2);
 	trace.eq('abc', 'abc');
+	trace.find(obj.num, 'obj.num为假')
+	trace.find(obj.nul, 'obj.nul为假')
 	trace.assert(456, 'error!');
 	trace.report();
 
-	var a = 456;
+	var a = 456, arr1 = [], arr2 = [0,1];
 	trace.eq(1, 1);
+	trace.find(arr1.length, 'arr1是空数组');
+	trace.find(arr2.length);
 	trace.assert(!!a, 'error!');
 	trace.report();
 
