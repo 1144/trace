@@ -40,7 +40,7 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 * __trace.sendLog__([msg]) - 参数msg可选，无msg时发送所有收集起来的错误日志。
 适用于线上环境，用于发送错误日志到日志处理服务器。建议在所有业务代码执行完毕时调用，即可一次上报所有错误。
 
-用于测试的接口API
+用于测试的接口API：
 
 * __trace.eq__(actualValue, expectedValue, [msg]) - 判断实际结果actualValue与期望值expectedValue是否一致，trace内部用全等 `===` 比较。
 msg为不相等时的报错信息。
