@@ -23,33 +23,33 @@ JavaScript代码调试、测试、错误监测上报工具，提供各浏览器�
 
 ## API文档
 
-* __trace(value1, value2, ...)__ - 输出普通日志，以白色字体显示。
+* __trace__(value1, value2, ...) - 输出普通日志，以白色字体显示。
 
-* __trace.ok(value1, value2, ...)__ - 输出成功日志，以绿色字体显示。
+* __trace.ok__(value1, value2, ...) - 输出成功日志，以绿色字体显示。
 
-* __trace.warn(value1, value2, ...)__ - 输出警告日志，以黄色字体显示。
+* __trace.warn__(value1, value2, ...) - 输出警告日志，以黄色字体显示。
 
-* __trace.error(value1, value2, ...)__ - 输出错误日志，以红色字体显示。
+* __trace.error__(value1, value2, ...) - 输出错误日志，以红色字体显示。
 
 以上4个接口都可同时传多个参数。输出日志时各数据间以 `◆` 符号分隔。
 
-* __trace.time(mark)__ - 开始计算某一段代码的用时，mark为计时标记。
+* __trace.time__(mark) - 开始计算某一段代码的用时，mark为计时标记。
 
-* __trace.timeEnd(mark)__ - 结束计算某一段代码的用时，mark为计时标记。
+* __trace.timeEnd__(mark) - 结束计算某一段代码的用时，mark为计时标记。
 
-* __trace.sendLog(msg)__ - 参数msg可选，无msg时发送所有收集起来的错误日志。
+* __trace.sendLog__(msg) - 参数msg可选，无msg时发送所有收集起来的错误日志。
 适用于线上环境，用于发送错误日志到日志处理服务器。建议在所有业务代码执行完毕时调用，即可一次上报所有错误。
 
 用于测试的接口API
 
-* __trace.eq(actualValue, expectedValue, msg)__ - 判断实际结果actualValue与期望值expectedValue是否一致，trace内部用全等 `===` 比较。
+* __trace.eq__(actualValue, expectedValue, msg) - 判断实际结果actualValue与期望值expectedValue是否一致，trace内部用全等 `===` 比较。
 msg为不相等时的报错信息。
 
-* __trace.find(value, msg)__ - 判断value是否为真，trace内部用 `if( value )` 判断。msg为参数value为假时的报错信息。
+* __trace.find__(value, msg) - 判断value是否为真，trace内部用 `if( value )` 判断。msg为参数value为假时的报错信息。
 
-* __trace.assert(trueValue, msg)__ - 判断结果是否为true，trace内部用 `=== true` 比较。msg为参数trueValue不等true时的报错信息。
+* __trace.assert__(trueValue, msg) - 判断结果是否为true，trace内部用 `=== true` 比较。msg为参数trueValue不等true时的报错信息。
 
-* __trace.report()__ - 打印测试报告。
+* __trace.report__() - 打印测试报告。
 
 ## 代码示例
 
