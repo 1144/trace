@@ -3,7 +3,7 @@
 	-author hahaboy | @攻城氏
 */
 window.trace || function(window, document){
-
+	
 	var _Trace = {}, //调试框对象，上线后不能使用这个对象！！！
 		tracePrefix = 'trace', //调试框命名前缀
 		cssPrefix = '#'+tracePrefix+'_box '; //样式前缀
@@ -14,13 +14,13 @@ window.trace || function(window, document){
 
 	//type: 0 white for trace, 1 green for ok, 2 yellow for warn, 3 red for err
 	function pushData(type, args){
-		args = args.length===1 ? args[0] : join.call(args,'◆'); //不要用' | '之类有空格的
+		args = args.length===1 ? args[0] : join.call(args, '◆'); //不要用' | '之类有空格的
 		_cache.push([type, args]);
 		_Trace.inited && _Trace.showThisData(type, args);
 	}
 	function trace(data){
 		//对trace单独处理，因为绝大多数时候是调用trace
-		arguments.length>1 && ( data=join.call(arguments,'◆') );
+		arguments.length>1 && (data = join.call(arguments, '◆'));
 		_cache.push([0, data]);
 		_Trace.inited && _Trace.showThisData(0, data);
 	}
@@ -38,9 +38,9 @@ window.trace || function(window, document){
 		_time[mark] = new Date().getTime();
 	};
 	trace.timeEnd = function(mark){
-		//_time[mark] && trace.err( mark+' time: '+(+new Date()-_time[mark]) );
+		//_time[mark] && trace.error( mark+' time: '+(+new Date()-_time[mark]) );
 		//不必判断_time[mark]存不存在，number-undefined=NaN，正好是一种报错
-		_cache.push([1, mark+'\'s time: '+(new Date().getTime()-_time[mark])]);
+		_cache.push([1, mark+'\'s time: '+(new Date().getTime() - _time[mark])]);
 		delete _time[mark];
 	};
 	var _testCount = 0, //测试用例总数
@@ -75,7 +75,7 @@ window.trace || function(window, document){
 			trace('本次报告时测试用例总数：'+_testCount);
 			if(_testErrorCount){
 				trace.error('　　测试失败总数：'+_testErrorCount);
-				trace.ok('　　测试成功总数：'+(_testCount-_testErrorCount));
+				trace.ok('　　测试成功总数：'+(_testCount - _testErrorCount));
 				_testErrorCount = 0;
 			}else{
 				trace.ok('　　测试全部通过。');
@@ -176,10 +176,13 @@ window.trace || function(window, document){
 			return fn.apply(context, arguments);
 		};
 	};
-	//将字符串的标签符号转义。这里只是进行简单的转义，已满足这里的需求。
+	var special_rep = {' ':'&nbsp;', '<':'&lt;', '&':'&amp;'};
+	//将字符串的标签符号转义。
 	var encodeHTML = function(str){
 		if(typeof str==='string'){
-			str = str==='' ? '[空字符串]' : str.replace(/</g,'&lt;');
+			str = str==='' ? '[空字符串]' : str.replace(/ |<|&/g, function(m){
+				return special_rep[m];
+			});
 		}
 		return str;
 	};
@@ -522,9 +525,8 @@ window.trace || function(window, document){
 			nodes.style.display = nodes.style.display==="none" ? "block" : "none";
 		}
 	};  
-	//显示指定类型的缓存数据
-	_Trace.showCacheData = function(type){
-		type = type || -1;
+	//显示缓存数据
+	_Trace.showCacheData = function(){
 		var i = 0,
 			len = _cache.length,
 			itype, idata;
@@ -532,19 +534,16 @@ window.trace || function(window, document){
 		for(; i < len; i++){
 			itype = _cache[i][0];
 			idata = _cache[i][1];
-			// 判断缓存的数据类型
-			if(type===-1 || itype===type){
-				if(typeof idata==="object" && idata){
-					this.printObject(idata, i);
-				}else{
-					this.list.appendChild(toNode('<li class="color-'+itype+(i&1?' bg-333':'')+
-						'"><span class="line_num">#'+i+'</span>'+encodeHTML(idata)+'</li>'));
-				}
+			if(typeof idata==='object' && idata){
+				this.printObject(idata, i);
+			}else{
+				this.list.appendChild(toNode('<li class="color-'+itype+(i&1?' bg-333':'')+
+					'"><span class="line_num">#'+i+'</span>'+encodeHTML(idata)+'</li>'));
 			}
 		}
 		this.len = len; //为后续showThisData使用
 		//数据渲染完毕，跳转到面板底部
-		this.scrollTo();
+		this.scrollToBottom();
 	};
 	//显示当前产生的调试信息
 	_Trace.showThisData = function(itype, idata){
@@ -556,12 +555,12 @@ window.trace || function(window, document){
 				'"><span class="line_num">#'+i+'</span>'+encodeHTML(idata)+'</li>'));
 		}
 		this.len++;
-		this.scrollTo();
+		this.scrollToBottom();
 	};
 	//_Trace.scroll = 0;
 	//调试窗滚动到val处
 	//不传值则滚到最底部
-	_Trace.scrollTo = function(){
+	_Trace.scrollToBottom = function(){
 		this.list_container.scrollTop = this.list_container.scrollHeight;
 	};
 	//显示/隐藏脚本输入框
@@ -579,7 +578,7 @@ window.trace || function(window, document){
 		try{
 			eval(scriptText);
 		}catch(e){
-			trace.err("Exec JS error:<br/>" + e.message);
+			trace.error("Execute JS error: " + e.message);
 		}
 	};
 	//清空所有调试信息，仅是控制台的呈现，不包括缓存的 JS 数组

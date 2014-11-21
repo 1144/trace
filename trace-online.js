@@ -4,7 +4,7 @@
 */
 window.trace || function(window){
 	
-	var logReceiver = 'http://xxx.com/jslog?data='; //日志接收接口
+	var logReceiver = 'http://count.cn/jslog?data='; //日志接收接口
 
 	var _cache = [], //调试输出的数据缓存
 		errMsg = '', //收集错误信息
@@ -15,11 +15,11 @@ window.trace || function(window){
 	trace.ok = trace.time = trace.timeEnd = trace.report = function(){};
 
 	trace.warn = function(msg){
-		arguments.length>1 && (msg = _cache.join.call(arguments,'◆'));
+		arguments.length>1 && (msg = _cache.join.call(arguments, '◆'));
 		_cache.push('[2]:'+msg);
 	};
 	trace.error = function(msg){
-		arguments.length>1 && (msg = _cache.join.call(arguments,'|'));
+		arguments.length>1 && (msg = _cache.join.call(arguments, ';'));
 		errMsg += encodeURIComponent(msg) + '---'; //收集错误信息
 		//信息的编码长度超过500，才向服务器发送日志
 		if(sendNow || errMsg>500){
@@ -32,7 +32,7 @@ window.trace || function(window){
 		actualValue===expectedValue || trace.error('EQ-ERROR:'+ (msg || ''));
 	};
 	trace.find = function(value, msg){
-		value || trace.error('FIND-ERROR: '+ (msg || ''));
+		value || trace.error('FIND-ERROR:'+ (msg || ''));
 	};
 	trace.assert = function(trueValue, msg){
 		trueValue===true || trace.error('ASSERT-ERROR:'+ (msg || ''));
@@ -44,7 +44,8 @@ window.trace || function(window){
 		img.onload = img.onerror = function(){
 			img = null;
 		};
-		img.src = logReceiver + msg + '&_r_=' + Math.random();
+		//同样的错误2.78小时内只报一次。10000000ms = 2.78小时
+		img.src = logReceiver + msg + '&t=' + String(new Date().getTime()).slice(0, 6);
 		//还真不用保证全部发送成功，没必要
 		//setTimeout(function(){}, 1000); //确保在firefox下页面关闭时也能发出img请求
 	}
