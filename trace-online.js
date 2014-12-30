@@ -1,6 +1,7 @@
 /*--
 	线上使用的trace文件
 	-author hahaboy | @攻城氏
+	-github https://github.com/1144/trace
 */
 window.trace || function(window){
 	

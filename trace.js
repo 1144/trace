@@ -1,6 +1,7 @@
 /*--
 	本地调试时使用的trace文件，暴露到window全局下的唯一变量名为trace
 	-author hahaboy | @攻城氏
+	-github https://github.com/1144/trace
 */
 window.trace || function(window, document){
 	
