@@ -4,15 +4,15 @@
 */
 window.trace || function(window){
 	
-	var logReceiver = 'http://count.cn/jslog?data='; //日志接收接口
+	var logReceiver = '//count.cn/jslog?data='; //日志接收接口
 
 	var _cache = [], //调试输出的数据缓存
 		errMsg = '', //收集错误信息
 		sendNow = false;
 
-	function trace(){}
+	function trace() {}
 
-	trace.ok = trace.time = trace.timeEnd = trace.report = function(){};
+	trace.ok = trace.time = trace.timeEnd = trace.report = trace.show = function () {};
 
 	trace.warn = function(msg){
 		arguments.length>1 && (msg = _cache.join.call(arguments, '◆'));
